@@ -1,0 +1,872 @@
+{
+  "info": {
+    "_postman_id": "c2c06652-257f-404c-a151-54bfee6f5972",
+    "name": "CSCI3916_HW3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52003147",
+    "_collection_link": "https://go.postman.co/collection/52003147-c2c06652-257f-404c-a151-54bfee6f5972?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Assignment 3",
+      "item": [
+        {
+          "name": "SignUp",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Signup request handled correctly\", function () {",
+                  "    pm.expect([200, 201, 400, 409]).to.include(status);",
+                  "});",
+                  "",
+                  "// If success",
+                  "if (status === 200 || status === 201) {",
+                  "    pm.test(\"User created successfully\", function () {",
+                  "        pm.expect(jsonData.success).to.eql(true);",
+                  "    });",
+                  "}",
+                  "",
+                  "// If duplicate user",
+                  "if (status === 400 || status === 409) {",
+                  "    pm.test(\"Duplicate user handled\", function () {",
+                  "        pm.expect(jsonData.success).to.eql(false);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"testinguser\",\n  \"username\": \"testinguser5432\",\n  \"password\": \"testtest\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/signup",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "SignIn",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set(\"token\", jsonData.token);",
+                  "",
+                  "pm.test(\"Signin successful\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"khadija1\",\n  \"password\": \"pass123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/signin",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "signin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Already Exists",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 409\", function () {",
+                  "    pm.response.to.have.status(409);",
+                  "});",
+                  "",
+                  "pm.test(\"Duplicate user rejected\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(false);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Khadija\",\n  \"username\": \"khadija1\",\n  \"password\": \"pass123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/signup",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetMovies",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/movies",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddNewMovie Copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"title\": \"Undertone\",\n \"releaseDate\": 2025,\n \"genre\": \"Horror\",\n \"actors\": [\n  {\n   \"actorName\": \"Nina Kiri\",\n   \"characterName\": \"Evy\"\n  }\n ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/movies",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddMovieNoActors",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Response indicates failure\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(false);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"title\": \"Bad Movie\",\n \"releaseDate\": 2024,\n \"genre\": \"Drama\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/movies",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateMoviewithName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"genre\": \"Horror\",\n  \"releaseDate\": 2025,\n  \"actors\": [\n    { \"actorName\": \"Nina Kiri\", \"characterName\": \"Evy\" },\n    { \"actorName\": \"Adam DiMarco\", \"characterName\": \"Justin\" },\n    { \"actorName\": \"Michèle Duquet\", \"characterName\": \"Mama\" }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/movies/Undertone",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "Undertone"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteMoviewithName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/movies/Undertone",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "Undertone"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Assignment4",
+      "item": [
+        {
+          "name": "ReviewCreated",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Review created message returned\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.message).to.eql(\"Review created!\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movieId\": \"69b805643bc98fe9d8fdf110\",\n  \"username\": \"khadija1\",\n  \"review\": \"Great movie 5/5. scary and fun!\",\n  \"rating\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/reviews",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetReviews",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/reviews",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteSingleReviewbyID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/reviews/69d2c4e47c5abd3e8852aad0",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "reviews",
+                "69d2c4e47c5abd3e8852aad0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteALLReviewbyName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/reviews/movie/The%20Conjuring",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "reviews",
+                "movie",
+                "The%20Conjuring"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetMoviesReviews=true",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has title\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData).to.have.property(\"title\");",
+                  "});",
+                  "",
+                  "pm.test(\"Response has reviews array\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData).to.have.property(\"reviews\");",
+                  "  pm.expect(jsonData.reviews).to.be.an(\"array\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/movies/Interstellar?reviews=true",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "Interstellar"
+              ],
+              "query": [
+                {
+                  "key": "reviews",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DifferentReview",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Review created message returned\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.message).to.eql(\"Review created!\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movieId\": \"69b79e680d2778b5bfdc2daf\",\n  \"username\": \"khadija1\",\n  \"review\": \"Different review text for final test\",\n  \"rating\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/reviews",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetMoviesReviews=true Copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/movies/Interstellar?reviews=true",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "Interstellar"
+              ],
+              "query": [
+                {
+                  "key": "reviews",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "MovieDoesNotExist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Movie not found message returned\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.message).to.eql(\"Movie not found\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/movies/NotARealMovie",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "NotARealMovie"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ReviewCreatedMovieDoesNotExist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400 or 404\", function () {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+                  "});",
+                  "",
+                  "pm.test(\"Invalid review request returns error message\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData).to.have.property(\"message\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movieId\": \"69b805643bc98fe9d8dscfasdadfdf110\",\n  \"username\": \"khadija1\",\n  \"review\": \"should not generate anything\",\n  \"rating\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/reviews",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw3-1",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
