@@ -36,7 +36,11 @@ const MovieSchema = new mongoose.Schema({
         actorName: { type: String, required: true },
         characterName: { type: String, required: true }
       }
+
     ],
+
+    imageUrl: { type: String },
+    
     required: true,
     validate: {
       validator: function(v) {
