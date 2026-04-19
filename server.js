@@ -149,6 +149,45 @@ router
     }
   });
 
+// GET movie by MongoDB ObjectId (used by React frontend)
+router.get("/movies/id/:id", authJwtController.isAuthenticated, async (req, res) => {
+  try {
+    const movieId = mongoose.Types.ObjectId.isValid(req.params.id)
+      ? new mongoose.Types.ObjectId(req.params.id)
+      : null;
+
+    if (!movieId) {
+      return res.status(400).json({ success: false, message: "Invalid movie ID" });
+    }
+
+    const movies = await Movie.aggregate([
+      { $match: { _id: movieId } },
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "movieId",
+          as: "reviews",
+        },
+      },
+      {
+        $addFields: {
+          avgRating: { $avg: "$reviews.rating" },
+        },
+      },
+    ]);
+
+    if (!movies || movies.length === 0) {
+      return res.status(404).json({ success: false, message: "Movie not found" });
+    }
+
+    return res.json(movies[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Something went wrong." });
+  }
+});
+
 router
   .route("/movies/:title")
   .get(authJwtController.isAuthenticated, async (req, res) => {

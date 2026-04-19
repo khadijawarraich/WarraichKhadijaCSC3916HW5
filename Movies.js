@@ -36,11 +36,7 @@ const MovieSchema = new mongoose.Schema({
         actorName: { type: String, required: true },
         characterName: { type: String, required: true }
       }
-
     ],
-
-    imageUrl: { type: String },
-    
     required: true,
     validate: {
       validator: function(v) {
@@ -48,7 +44,8 @@ const MovieSchema = new mongoose.Schema({
       },
       message: 'A movie must have at least one actor.'
     }
-  }
+  },
+  imageUrl: { type: String }
 });
 
 module.exports = mongoose.model('Movie', MovieSchema);
