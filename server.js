@@ -232,8 +232,8 @@ router
     try {
       const movie = await Movie.findOneAndUpdate(
         { title: { $regex: `^${req.params.title}$`, $options: "i" } },
-        req.body,
-        { new: true, runValidators: true }
+        { $set: req.body },
+        { new: true }
       );
 
       if (!movie) {
@@ -302,35 +302,31 @@ router
   })
   .post(authJwtController.isAuthenticated, async (req, res) => {
     try {
-      const username =
-        req.user && req.user.username
-          ? req.user.username
-          : req.body.username;
+      if (!req.body.movieId || !req.body.review || req.body.rating === undefined) {
+        return res.status(400).json({ success: false, message: "movieId, review, and rating are required." });
+      }
+
+      if (!mongoose.Types.ObjectId.isValid(req.body.movieId)) {
+        return res.status(400).json({ success: false, message: "Invalid movieId format." });
+      }
+
+      const username = req.user && req.user.username ? req.user.username : req.body.username;
 
       const review = new Review({
-        movieId: req.body.movieId,
+        movieId: new mongoose.Types.ObjectId(req.body.movieId),
         username: username,
         review: req.body.review,
-        rating: req.body.rating,
+        rating: Number(req.body.rating),
       });
 
       await review.save();
-
-      res.status(201).json({ message: "Review created!" });
+      res.status(201).json({ success: true, message: "Review created!" });
     } catch (err) {
-      console.error(err);
-
+      console.error("Review save error:", err);
       if (err.name === "ValidationError") {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid review information.",
-        });
+        return res.status(400).json({ success: false, message: err.message });
       }
-
-      res.status(500).json({
-        success: false,
-        message: "Something went wrong. Please try again later.",
-      });
+      res.status(500).json({ success: false, message: "Something went wrong." });
     }
   });
 
