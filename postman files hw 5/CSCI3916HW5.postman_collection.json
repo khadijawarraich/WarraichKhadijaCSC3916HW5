@@ -1,14 +1,14 @@
 {
   "info": {
-    "_postman_id": "c2c06652-257f-404c-a151-54bfee6f5972",
-    "name": "CSCI3916_HW3",
+    "_postman_id": "5536d237-56ee-451d-a594-24a10c440eea",
+    "name": "CSCI3916HW5",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52003147",
-    "_collection_link": "https://go.postman.co/collection/52003147-c2c06652-257f-404c-a151-54bfee6f5972?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/52003147-5536d237-56ee-451d-a594-24a10c440eea?source=collection_link"
   },
   "item": [
     {
-      "name": "Assignment 3",
+      "name": "Assignment 3 Copy",
       "item": [
         {
           "name": "SignUp",
@@ -415,7 +415,7 @@
       ]
     },
     {
-      "name": "Assignment4",
+      "name": "Assignment4 Copy",
       "item": [
         {
           "name": "ReviewCreated",
@@ -450,7 +450,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"movieId\": \"69b805643bc98fe9d8fdf110\",\n  \"username\": \"khadija1\",\n  \"review\": \"Great movie 5/5. scary and fun!\",\n  \"rating\": 5\n}",
+              "raw": "{\n  \"movieId\": \"69b805643bc98fe9d8fdf110\",\n  \"username\": \"khadija1\",\n  \"review\": \"Great movie 5/5. scary and fun! one more timeee and again\",\n  \"rating\": 5\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -544,7 +544,7 @@
               }
             ],
             "url": {
-              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/reviews/69d2c4e47c5abd3e8852aad0",
+              "raw": "https://warraichkhadijacsc3916hw3-1.onrender.com/reviews/69d5d452fd43ea35d0200a22",
               "protocol": "https",
               "host": [
                 "warraichkhadijacsc3916hw3-1",
@@ -553,7 +553,7 @@
               ],
               "path": [
                 "reviews",
-                "69d2c4e47c5abd3e8852aad0"
+                "69d5d452fd43ea35d0200a22"
               ]
             }
           },
@@ -861,6 +861,241 @@
               ],
               "path": [
                 "reviews"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Assignment5",
+      "item": [
+        {
+          "name": "Add Interstellar Image",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"imageUrl\": \"https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw5.onrender.com/movies/Interstellar",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw5",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "Interstellar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Frankenstein Image",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"imageUrl\": \"https://upload.wikimedia.org/wikipedia/en/9/94/Frankenstein_2025_film_poster.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw5.onrender.com/movies/Frankenstein",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw5",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "Frankenstein"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Inception",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"imageUrl\": \"https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw5.onrender.com/movies/Inception",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw5",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "Inception"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "The Conjuring Image",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"imageUrl\": \"https://upload.wikimedia.org/wikipedia/en/8/8c/The_Conjuring_poster.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw5.onrender.com/movies/The%20Conjuring",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw5",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "The%20Conjuring"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UndertoneImage",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"imageUrl\": \"https://upload.wikimedia.org/wikipedia/en/6/64/Undertone_%282025%29_poster.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw5.onrender.com/movies/Undertone",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw5",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies",
+                "Undertone"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddNewMoviewithPoster",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Project Hail Mary\",\n  \"releaseDate\": 2026,\n  \"genre\": \"Science Fiction\",\n  \"imageUrl\": \"https://upload.wikimedia.org/wikipedia/en/3/3b/Project_Hail_Mary_poster.jpg\",\n  \"actors\": [\n    {\n      \"actorName\": \"Ryan Gosling\",\n      \"characterName\": \"Ryland Grace\"\n    },\n    {\n      \"actorName\": \"Lionel Boyce\",\n      \"characterName\": \"Rocky\"\n    },\n    {\n      \"actorName\": \"Sandra Hüller\",\n      \"characterName\": \"Dr. Scyther\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://warraichkhadijacsc3916hw5.onrender.com/movies",
+              "protocol": "https",
+              "host": [
+                "warraichkhadijacsc3916hw5",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "movies"
               ]
             }
           },
